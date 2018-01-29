@@ -15,6 +15,8 @@ container_create = '/containers/create?name={0}'
 
 image_pull = '/images/create?fromImage={0}&tag={1}'
 
+socket.setdefaulttimeout(120)
+
 
 def del_last_char(str):
     str_list = list(str)
@@ -46,9 +48,9 @@ def get_container_info_by_container_name(host, port, name):
                     return container
                 else:
                     return "!exsit"
-    except Exception, e:
+    except Exception:
         print traceback.format_exc()
-        raise Exception("I forced")
+        return 'connect_error'
     finally:
         if httpsConn:
             httpsConn.close()
@@ -79,9 +81,9 @@ def delete_container(host, port, name):
             print('delete_container reponse %s' % http_resp)
             if http_code not in Http_Success_code:
                 return '-1'
-
-    except Exception, e:
+    except Exception:
         print traceback.format_exc()
+        return 'connect_error'
     finally:
         if httpsConn:
             httpsConn.close()
@@ -124,9 +126,9 @@ def create_container(host, port, docker_container_name, current_docker, paramter
         print('create_container reponse %s' % http_resp)
         if http_code not in Http_Success_code:
             return '-1'
-    except Exception, e:
+    except Exception:
         print traceback.format_exc()
-        raise Exception("I forced")
+        return 'connect_error'
     finally:
         if httpsConn:
             httpsConn.close()
@@ -148,8 +150,9 @@ def start_container(host, port, container_name):
         print('start_container reponse %s' % http_resp)
         if http_code not in Http_Success_code:
             return '-1'
-    except Exception, e:
+    except Exception:
         print traceback.format_exc()
+        return 'connect_error'
     finally:
         if httpsConn:
             httpsConn.close()
@@ -174,11 +177,13 @@ def pull_docker_image(host, port, name, tag):
             return '-1'
         else:
             return '0'
-    except Exception, e:
+    except Exception:
         print traceback.format_exc()
+        return 'connect_error'
     finally:
         if httpsConn:
             httpsConn.close()
+
 
 # body = '{"Image":"$IMAGE","PortBindings": { "$CONTAINER_PORT/tcp": [{ "HostPort": "$HOST_PORT" }]}}'
 # s = body.replace("$IMAGE",'nginx').replace("$CONTAINER_PORT","80").replace("$HOST_PORT","")
@@ -191,4 +196,6 @@ def pull_docker_image(host, port, name, tag):
 # container = get_container_info_by_container_name('111.231.86.41', '2376', 'dadac')
 #
 # print container
-# get_container_info_by_container_name('192.168.136.81', '2376', "dac")
+container = get_container_info_by_container_name('192.168.136.81', '2376', "modest_jepsen")
+print type(container)
+print container
