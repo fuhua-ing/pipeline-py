@@ -12,7 +12,7 @@ GO_PIPELINE_COUNTER = os.getenv('GO_PIPELINE_COUNTER')
 GO_JOB_NAME = os.getenv('GO_JOB_NAME')
 
 # pipeline env
-GIT_URL = os.getenv('SOURCE_CODE_URL')
+GIT_URL = os.getenv('GIT_SOURCE_URL')
 
 # stage env
 GIT_BRANCH = os.getenv('GIT_BRANCH')
