@@ -15,7 +15,7 @@ def get_tar(r, g, a, v, c, p, curr_path):
     print resp.code
     true_url = resp.geturl()
     print true_url
-    f = urllib2.urlopen(true_url)
+    f = urllib2.urlopen(true_url,timeout=30000)
     http_code = f.code
     print f.code
     data = f.read()
