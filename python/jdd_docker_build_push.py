@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os
+import os,time
 from network.jdd_get_file import get_tar
 from network.jdd_get_file import get_dockerfile
 from jdd_common import workPath, spliter, GO_PIPELINE_NAME, GO_JOB_NAME, GO_PIPELINE_COUNTER, GIT_BRANCH, \
@@ -30,6 +30,7 @@ os.system('mkdir -p ' + curr_path)
 
 
 res = get_tar(PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, CLASSIFILER, PROJECT_PACKAGE_TYPE, curr_path)
+time.sleep(5)
 if res == '-1':
     raise Exception("download tar.gz failed,please check last step run successfully")
 md5 = get_tar_md5()
@@ -38,7 +39,7 @@ if md5 != res:
 
 # 拉取docker file
 get_dockerfile(curr_path)
-
+time.sleep(3)
 # docker build
 
 # timestampLine = str(datetime.now().strftime('%Y%m%d%H%M%S'))
@@ -48,5 +49,6 @@ current_docker = DOCKER_IMAGE_NAME + ':' + DOCKER_TAG_VERSION + '-' + GIT_BRANCH
 
 C_docker_build = 'docker build -t ' + current_docker + ' .'
 C_docker_push = 'docker push ' + current_docker
+time.sleep(2)
 C_docker_rm_local = 'docker rmi ' + current_docker
 os.system('cd ' + curr_path + ' && ' + C_docker_build + ' && ' + C_docker_push + ' && ' + C_docker_rm_local)
