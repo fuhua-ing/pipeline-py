@@ -6,7 +6,7 @@ from jdd_docker_http import pull_docker_image
 from jdd_docker_http import create_container
 from jdd_docker_http import start_container
 from jdd_common import DOCKER_IMAGE_NAME, DOCKER_CONTAINER_NAME, PARAMTER_PORT, \
-    PARAMTER_VOLUME, DOCKER_TAG_VERSION, GIT_BRANCH, GO_PIPELINE_COUNTER
+    PARAMTER_VOLUME, DOCKER_TAG_VERSION, GIT_BRANCH, GO_PIPELINE_COUNTER, PARAMTER_ENTRYPOINT
 
 image_tag = DOCKER_TAG_VERSION + '-' + GIT_BRANCH + '-' + GO_PIPELINE_COUNTER
 current_docker = DOCKER_IMAGE_NAME + ':' + image_tag
@@ -29,14 +29,14 @@ def dowork(server):
         print 'container is not !exist'
         pull_docker_image(ip, port, DOCKER_IMAGE_NAME, image_tag)
         create_container(ip, port, DOCKER_CONTAINER_NAME, current_docker, paramter_port=PARAMTER_PORT,
-                         paramter_volume=PARAMTER_VOLUME)
+                         paramter_volume=PARAMTER_VOLUME, paramter_Entrypoint=PARAMTER_ENTRYPOINT)
         start_container(ip, port, DOCKER_CONTAINER_NAME)
     else:
         print 'start to delete the container'
         delete_container(ip, port, DOCKER_CONTAINER_NAME)
         pull_docker_image(ip, port, DOCKER_IMAGE_NAME, image_tag)
         create_container(ip, port, DOCKER_CONTAINER_NAME, current_docker, paramter_port=PARAMTER_PORT,
-                         paramter_volume=PARAMTER_VOLUME)
+                         paramter_volume=PARAMTER_VOLUME, paramter_Entrypoint=PARAMTER_ENTRYPOINT)
         start_container(ip, port, DOCKER_CONTAINER_NAME)
 
 
