@@ -94,8 +94,8 @@ def get_container_info_by_container_name(host, port, name):
                 container_names.append(container_name.encode("utf-8"))
             cc = '/' + name
             if cc in container_names:
-                print 'The container you want is: ' + str(container)
-                return container
+                print 'container exist'
+                return cc
             else:
                 print 'The specifect container is not exist'
                 return "!exsit"
