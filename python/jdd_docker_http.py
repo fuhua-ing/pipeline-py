@@ -89,8 +89,9 @@ def get_container_info_by_container_name(host, port, name):
             for container in res_json:
                 container_name_list = container['Names']
                 container_name = container_name_list[0]
+                print 'container name is ' + container_name
                 cc = '/' + name
-                print cc
+                print 'cc is ' + cc
                 if container_name == cc:
                     print 'The container you want is: ' + str(container)
                     return container
