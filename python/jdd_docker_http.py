@@ -45,6 +45,7 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
 
     if paramter_Entrypoint is not None:
         entrypointList = paramter_Entrypoint.split(",")
+        entrypointLine = ''
         for entry in entrypointList:
             entrypointLine = entrypointLine + '"' + entry + '",'
         entrypoint_content = del_last_char(entrypointLine)
