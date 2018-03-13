@@ -55,12 +55,15 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
     print volumes
 
     if (ports is not None) and (volumes is not None):
+        print 'hostconfig 1'
         HostConfig = '"HostConfig":{' + ports + ',' + volumes + '}'
 
     if (ports is not None) and (volumes is None):
+        print 'hostconfig 2'
         HostConfig = '"HostConfig":{' + ports + '}'
 
     if (ports is None) and (volumes is not None):
+        print 'hostconfig 3'
         HostConfig = '"HostConfig":{' + volumes + '}'
 
     body = '{' + image
