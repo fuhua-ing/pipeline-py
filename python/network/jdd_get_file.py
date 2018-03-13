@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import urllib2,socket,time
+import urllib2, time
 
 maven_url = 'maven-repository.jdddata.com'
 maven_path = '/nexus/service/local/artifact/maven/redirect?' + 'r=$R' + '&g=$G' + '&a=$A' + '&v=$V' + '&c=$C' + '&p=$P'
 Success_Http_Code = [200, 201, 202, 203, 204, 205, 206, 207, 208, 209]
 
-socket.setdefaulttimeout(12000)
+
 def get_tar(r, g, a, v, c, p, curr_path):
     url = maven_path.replace("$R", r).replace("$G", g).replace("$A", a).replace("$V", v).replace("$C", c).replace("$P",
                                                                                                                   p)
@@ -15,14 +15,15 @@ def get_tar(r, g, a, v, c, p, curr_path):
     print resp.code
     true_url = resp.geturl()
     print true_url
-    f = urllib2.urlopen(true_url,timeout=30000)
+    time.sleep(2)
+    f = urllib2.urlopen(true_url, timeout=300000)
     http_code = f.code
-    print f.code
+    print http_code
     data = f.read()
     with open(curr_path + '/' + 'app-install.tar.gz', "wb") as code:
         code.write(data)
     time.sleep(5)
-    md5 = urllib2.urlopen(true_url + '.md5',timeout=30000)
+    md5 = urllib2.urlopen(true_url + '.md5', timeout=30000)
     if md5.code not in Success_Http_Code:
         return "-1"
     md5_code = md5.read()

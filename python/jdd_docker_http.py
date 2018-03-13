@@ -15,7 +15,7 @@ container_create = '/containers/create?name={0}'
 
 image_pull = '/images/create?fromImage={0}&tag={1}'
 
-socket.setdefaulttimeout(12000)
+socket.setdefaulttimeout(1200000)
 
 
 def del_last_char(str):
