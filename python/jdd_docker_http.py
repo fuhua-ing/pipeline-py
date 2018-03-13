@@ -36,7 +36,7 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
         portList = paramter_port.strip().split(',')
         portline = ''
         for port in portList:
-            portline = '"' + port.split(':')[1] + '/tcp": [{"HostPort":"' + port.split[0] + '"}],'
+            portline = portline + '"' + port.split(':')[1] + '/tcp": [{"HostPort":"' + port.split[0] + '"}],'
         port_content = del_last_char(portline)
         ports = '"PortBindings":{' + port_content + '}'
 
@@ -46,7 +46,7 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
     if paramter_Entrypoint is not None:
         entrypointList = paramter_Entrypoint.split(",")
         for entry in entrypointList:
-            entrypointLine = '"' + entry + '",'
+            entrypointLine = entrypointLine + '"' + entry + '",'
         entrypoint_content = del_last_char(entrypointLine)
         entrypoint = '"Entrypoint":[' + entrypoint_content + ']'
 
