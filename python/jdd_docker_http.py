@@ -2,7 +2,7 @@
 import httplib, socket, ssl, traceback, json
 from _ssl import PROTOCOL_TLSv1_2
 
-Http_Success_code = [200, 201, 202, 203, 204, 205, 206, 207, 208, 209]
+Http_Success_code = [200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 300, 301, 302, 303, 304, 305, 306, 307]
 
 ca_cert_file = '/data/gocd/python/pipeline-py/python/cert/ca.pem'
 key_file = '/data/gocd/python/pipeline-py/python/cert/key.pem'
