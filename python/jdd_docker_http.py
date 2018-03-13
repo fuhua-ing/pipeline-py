@@ -54,15 +54,15 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
 
     print volumes
 
-    if (ports is not None) and (volumes is not None):
+    if (ports is not None and ports.strip()!="") and (volumes is not None and volumes.strip()!=""):
         print 'hostconfig 1'
         HostConfig = '"HostConfig":{' + ports + ',' + volumes + '}'
 
-    if (ports is not None) and (volumes is None):
+    if (ports is not None and ports.strip()!="") and (volumes is None or volumes.strip()==""):
         print 'hostconfig 2'
         HostConfig = '"HostConfig":{' + ports + '}'
 
-    if (ports is None) and (volumes is not None):
+    if (ports is None or ports.strip()=="") and (volumes is not None and volumes.strip()!=""):
         print 'hostconfig 3'
         HostConfig = '"HostConfig":{' + volumes + '}'
 
