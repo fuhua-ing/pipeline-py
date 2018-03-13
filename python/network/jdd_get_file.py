@@ -19,7 +19,7 @@ def get_tar(r, g, a, v, c, p, curr_path):
     http_code = f.code
     print f.code
     data = f.read()
-    with open(curr_path + '/' + 'app.tar.gz', "wb") as code:
+    with open(curr_path + '/' + 'app-install.tar.gz', "wb") as code:
         code.write(data)
     md5 = urllib2.urlopen(true_url + '.md5')
     if md5.code not in Success_Http_Code:

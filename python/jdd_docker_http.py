@@ -4,9 +4,9 @@ from _ssl import PROTOCOL_TLSv1_2
 
 Http_Success_code = [200, 201, 202, 203, 204, 205, 206, 207, 208, 209]
 
-ca_cert_file = '/opt/test_std/cert/ca.pem'
-key_file = '/opt/test_std/cert/key.pem'
-cert_file = '/opt/test_std/cert/cert.pem'
+ca_cert_file = '/data/gocd/python/pipeline-py/python/cert/ca.pem'
+key_file = '/data/gocd/python/pipeline-py/python/cert/key.pem'
+cert_file = '/data/gocd/python/pipeline-py/python/cert/cert.pem'
 
 container_info_all = '/containers/json?all=1'
 container_stop = '/containers/{0}/stop'
