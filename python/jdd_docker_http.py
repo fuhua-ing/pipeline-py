@@ -88,6 +88,7 @@ def get_container_info_by_container_name(host, port, name):
             res_json = json.loads(http_resp)
             for container in res_json:
                 container_name_list = container['Names']
+                print container_name_list
                 container_name = container_name_list[0]
                 print type(container_name)
                 print 'container name is ' + container_name
