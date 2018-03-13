@@ -8,7 +8,7 @@ ca_cert_file = '/data/gocd/python/pipeline-py/python/cert/ca.pem'
 key_file = '/data/gocd/python/pipeline-py/python/cert/key.pem'
 cert_file = '/data/gocd/python/pipeline-py/python/cert/cert.pem'
 
-container_info_all = '/containers/json?all=1'
+container_info_all = '/containers/json?all=true'
 container_stop = '/containers/{0}/stop'
 container_delete = '/containers/{0}'
 container_create = '/containers/create?name={0}'
@@ -81,18 +81,22 @@ def get_container_info_by_container_name(host, port, name):
         print('get_container_info_by_container_name status: %d' % http_code)
         print('get_container_info_by_container_name reponse %s' % http_resp)
         if http_code not in Http_Success_code:
+            print 'get container info time out!!'
             return 'time_out'
         else:
+            print 'success get the container info'
             res_json = json.loads(http_resp)
             for container in res_json:
                 container_name_list = container['Names']
                 container_name = container_name_list[0]
                 if container_name == ('/' + name):
+                    print 'The container you want is: ' + str(container)
                     return container
                 else:
+                    print 'The specifect container is not exist'
                     return "!exsit"
     except Exception:
-        print traceback.format_exc()
+        print 'python is in exception!'
         return 'connect_error'
     finally:
         if httpsConn:

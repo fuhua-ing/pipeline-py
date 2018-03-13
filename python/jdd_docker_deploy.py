@@ -59,3 +59,6 @@ requests = threadpool.makeRequests(dowork, servers)
 for req in requests:
     pool.putRequest(req)
 pool.wait()
+
+if exception is not None and len(exception) > 0:
+    raise exception
