@@ -53,7 +53,7 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
         entrypoint = '"Entrypoint":[' + entrypoint_content + ']'
 
     print volumes
-    print HostConfig
+
     if (ports is not None and len(ports) > 0) and (volumes is not None and len(volumes) > 0):
         HostConfig = '"HostConfig":{' + ports + ',' + volumes + '}'
     if (ports is not None and len(ports) > 0) and (volumes is None or len(volumes) < 0):
@@ -65,7 +65,7 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
         body = body + ',' + entrypoint
     if HostConfig is not None and len(HostConfig) > 0:
         body = body + ',' + HostConfig
-
+    print HostConfig
     body = body + '}'
     return body
 
