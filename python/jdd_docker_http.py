@@ -42,7 +42,7 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
 
     print paramter_volume
     if paramter_volume is not None:
-        volumes = '"Binds":["' + paramter_volume + '"]'
+        volumes = volumes + '"Binds":["' + paramter_volume + '"]'
 
     if paramter_Entrypoint is not None:
         entrypointList = paramter_Entrypoint.split(",")
