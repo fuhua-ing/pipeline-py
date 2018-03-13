@@ -32,7 +32,7 @@ def get_tar(r, g, a, v, c, p, curr_path):
 def get_dockerfile(curr_path):
     url = 'https://gitlab.jdddata.com/gezhiwei/dockerfile-collection/raw/master/dac/Dockerfile?private_token=3UQ39VW441S3apUWNbRk'
     resp = urllib2.urlopen(url, timeout=300)
-    print 'get dockerfile http code: ' + resp.code
+    print 'get dockerfile http code: ' + str(resp.code)
     data = resp.read()
     with open(curr_path + '/' + 'Dockerfile', "wb") as code:
         code.write(data)
