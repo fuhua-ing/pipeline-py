@@ -27,7 +27,7 @@ def del_last_char(str):
 def docker_generateBody(current_docker, paramter_port, paramter_volume,
                         paramter_Entrypoint):
     '''{"Env": ["FOO=bar","BAZ=quux"],"Cmd": ["date"],"Entrypoint": "","Image": "ubuntu","HostConfig": {"Binds": ["/tmp:/tmp"],"PortBindings": {"22/tcp": [{"HostPort": "11022"}]}}}'''
-    image = '"Image":' + '""' + current_docker + '"'
+    image = '"Image":' + '"' + current_docker + '"'
     ports = ''
     volumes = ''
     entrypoint = ''
