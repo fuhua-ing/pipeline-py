@@ -56,8 +56,10 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
 
     if (ports is not None) and (volumes is not None):
         HostConfig = '"HostConfig":{' + ports + ',' + volumes + '}'
+
     if (ports is not None) and (volumes is None):
         HostConfig = '"HostConfig":{' + ports + '}'
+
     if (ports is None) and (volumes is not None):
         HostConfig = '"HostConfig":{' + volumes + '}'
 
