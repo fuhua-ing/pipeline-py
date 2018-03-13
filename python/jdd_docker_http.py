@@ -24,6 +24,48 @@ def del_last_char(str):
     return "".join(str_list)
 
 
+def docker_generateBody(current_docker, paramter_port, paramter_volume,
+                        paramter_Entrypoint):
+    '''{"Env": ["FOO=bar","BAZ=quux"],"Cmd": ["date"],"Entrypoint": "","Image": "ubuntu","HostConfig": {"Binds": ["/tmp:/tmp"],"PortBindings": {"22/tcp": [{"HostPort": "11022"}]}}}'''
+    image = '"Image:"' + '""' + current_docker + '"'
+    ports = ''
+    volumes = ''
+    entrypoint = ''
+    HostConfig = ''
+    if paramter_port is not None:
+        portList = paramter_port.strip().split(',')
+        portline = ''
+        for port in portList:
+            portline = '"' + port.split(':')[1] + '/tcp": [{"HostPort":"' + port.split[0] + '"}],'
+        port_content = del_last_char(portline)
+        ports = '"PortBindings":{' + port_content + '}'
+
+    if paramter_volume is not None:
+        volumes = '"Binds":["' + paramter_volume + '"]'
+
+    if paramter_Entrypoint is not None:
+        entrypointList = paramter_Entrypoint.split(",")
+        for entry in entrypointList:
+            entrypointLine = '"' + entry + '",'
+        entrypoint_content = del_last_char(entrypointLine)
+        entrypoint = '"Entrypoint":"[' + entrypoint_content + ']"'
+
+    if (ports is not None and len(ports) > 0) and (volumes is not None and len(volumes) > 0):
+        HostConfig = '"HostConfig":{' + ports + ',' + volumes + '}'
+    if (ports is not None and len(ports) > 0) and (volumes is None or len(volumes) < 0):
+        HostConfig = '"HostConfig":{' + ports + '}'
+    if (ports is None or len(ports) < 0) and (volumes is not None or len(volumes) > 0):
+        HostConfig = '"HostConfig":{' + volumes + '}'
+    body = '{' + image
+    if entrypoint is not None and len(entrypoint) > 0:
+        body = body + ',' + entrypoint
+    if HostConfig is not None and len(HostConfig) > 0:
+        body = body + ',' + HostConfig
+
+    body = body + '}'
+    return body
+
+
 def get_container_info_by_container_name(host, port, name):
     try:
         httpsConn = httplib.HTTPSConnection(host, port)
@@ -89,7 +131,8 @@ def delete_container(host, port, name):
             httpsConn.close()
 
 
-def create_container(host, port, docker_container_name, current_docker, paramter_port, paramter_volume):
+def create_container(host, port, docker_container_name, current_docker, paramter_port, paramter_volume,
+                     paramter_Entrypoint):
     try:
         httpsConn = httplib.HTTPSConnection(host, port)
         sock = socket.create_connection((httpsConn.host, httpsConn.port))
@@ -99,22 +142,7 @@ def create_container(host, port, docker_container_name, current_docker, paramter
         # body = '{"Image":"$IMAGE","PortBindings": { "$CONTAINER_PORT/tcp": [{ "HostPort": "$HOST_PORT" }]}}'
         # body = '{"Image":"docker-registry.jdddata.com/jdddata/dac-schedule:snapshot-1.0.0-81" , "HostConfig":{"Binds":["/root/gezhiwei/log:/usr/local/app/log"]}}'
 
-
-        body = '{"Image":' + '"' + current_docker + '"'
-        if paramter_port is not None and len(paramter_port) > 0:
-            body = body + ',' + '"PortBindings":{'
-            p = ''
-            for port in paramter_port:
-                li = str(port).split(":")
-                p = p + '"' + li[0] + '/tcp' + '":[{"HostPort":"' + '"' + li[1] + '"}]' + ","
-            p = del_last_char(p) + '}'
-            body = body + p
-
-        if paramter_volume is not None:
-            body = body + ',' + '"HostConfig":{"Binds":['
-            body = body + '"' + paramter_volume + '"]}'
-
-        body = body + '}'
+        body = docker_generateBody(current_docker, paramter_port, paramter_volume, paramter_Entrypoint)
 
         print body
         path = container_create.replace("{0}", docker_container_name)
