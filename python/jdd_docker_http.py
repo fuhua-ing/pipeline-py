@@ -54,12 +54,13 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
 
     print volumes
 
-    if (ports is not None and len(ports) > 0) and (volumes is not None and len(volumes) > 0):
+    if (ports is not None) and (volumes is not None):
         HostConfig = '"HostConfig":{' + ports + ',' + volumes + '}'
-    if (ports is not None and len(ports) > 0) and (volumes is None or len(volumes) < 0):
+    if (ports is not None) and (volumes is None):
         HostConfig = '"HostConfig":{' + ports + '}'
-    if (ports is None or len(ports) < 0) and (volumes is not None and len(volumes) > 0):
+    if (ports is None) and (volumes is not None):
         HostConfig = '"HostConfig":{' + volumes + '}'
+
     body = '{' + image
     if entrypoint is not None and len(entrypoint) > 0:
         body = body + ',' + entrypoint
