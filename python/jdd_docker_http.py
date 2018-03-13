@@ -40,6 +40,7 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
         port_content = del_last_char(portline)
         ports = '"PortBindings":{' + port_content + '}'
 
+    print paramter_volume
     if paramter_volume is not None:
         volumes = '"Binds":["' + paramter_volume + '"]'
 
