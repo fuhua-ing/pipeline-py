@@ -86,20 +86,19 @@ def get_container_info_by_container_name(host, port, name):
         else:
             print 'success get the container info'
             res_json = json.loads(http_resp)
+            container_names = []
             for container in res_json:
                 container_name_list = container['Names']
                 print container_name_list
                 container_name = container_name_list[0]
-                print type(container_name)
-                print 'container name is ' + container_name
-                cc = '/' + name
-                print 'cc is ' + cc
-                if container_name == cc:
-                    print 'The container you want is: ' + str(container)
-                    return container
-                else:
-                    print 'The specifect container is not exist'
-                    return "!exsit"
+                container_names.append(container_name.encode("utf-8"))
+            cc = '/' + name
+            if cc in container_names:
+                print 'The container you want is: ' + str(container)
+                return container
+            else:
+                print 'The specifect container is not exist'
+                return "!exsit"
     except Exception:
         print 'python is in exception!'
         return 'connect_error'
