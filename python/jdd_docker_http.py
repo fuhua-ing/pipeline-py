@@ -99,6 +99,7 @@ def create_container(host, port, docker_container_name, current_docker, paramter
         # body = '{"Image":"$IMAGE","PortBindings": { "$CONTAINER_PORT/tcp": [{ "HostPort": "$HOST_PORT" }]}}'
         # body = '{"Image":"docker-registry.jdddata.com/jdddata/dac-schedule:snapshot-1.0.0-81" , "HostConfig":{"Binds":["/root/gezhiwei/log:/usr/local/app/log"]}}'
 
+
         body = '{"Image":' + '"' + current_docker + '"'
         if paramter_port is not None and len(paramter_port) > 0:
             body = body + ',' + '"PortBindings":{'

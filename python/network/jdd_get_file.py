@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import urllib2
+import urllib2,socket
 
 maven_url = 'maven-repository.jdddata.com'
 maven_path = '/nexus/service/local/artifact/maven/redirect?' + 'r=$R' + '&g=$G' + '&a=$A' + '&v=$V' + '&c=$C' + '&p=$P'
 Success_Http_Code = [200, 201, 202, 203, 204, 205, 206, 207, 208, 209]
 
-
+socket.setdefaulttimeout(12000)
 def get_tar(r, g, a, v, c, p, curr_path):
     url = maven_path.replace("$R", r).replace("$G", g).replace("$A", a).replace("$V", v).replace("$C", c).replace("$P",
                                                                                                                   p)
