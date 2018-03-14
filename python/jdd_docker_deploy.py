@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import threadpool, multiprocessing, os
 from python.constants.jdd_common_constants import DOCKER_IMAGE_TAG, CURRENT_DOCKER_WITH_TAG
 from python.constants.jdd_constants_from_env import DOCKER_CONTAINER_NAME, DOCKER_IMAGE_NAME, PARAMTER_PORT, \
     PARAMTER_ENTRYPOINT, PARAMTER_VOLUME, SERVER_INFO
