@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # 创建tar包工作目录
-import os,sys
+import os
 from time import sleep
 from constants.jdd_commands import C_docker_build, C_docker_push, C_docker_rm_local
 from constants.jdd_common_constants import DOCKER_BUILD_WORK_PATH
