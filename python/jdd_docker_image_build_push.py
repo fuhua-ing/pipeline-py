@@ -3,10 +3,9 @@
 # 创建tar包工作目录
 import os,sys
 from time import sleep
-sys.path.append('constants/jdd_commands.py')
-from python.constants.jdd_commands import C_docker_build, C_docker_push, C_docker_rm_local
-from python.constants.jdd_common_constants import DOCKER_BUILD_WORK_PATH
-from python.constants.jdd_constants_from_env import PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, \
+from constants.jdd_commands import C_docker_build, C_docker_push, C_docker_rm_local
+from constants.jdd_common_constants import DOCKER_BUILD_WORK_PATH
+from constants.jdd_constants_from_env import PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, \
     CLASSIFIER, PROJECT_PACKAGE_TYPE
 from python.service.jdd_service import get_tar, get_tar_md5, get_dockerfile
 
