@@ -2,11 +2,15 @@
 import threadpool, multiprocessing, os
 from python.constants.jdd_common_constants import DOCKER_IMAGE_TAG, CURRENT_DOCKER_WITH_TAG
 from python.constants.jdd_constants_from_env import DOCKER_CONTAINER_NAME, DOCKER_IMAGE_NAME, PARAMTER_PORT, \
-    PARAMTER_ENTRYPOINT, PARAMTER_VOLUME
+    PARAMTER_ENTRYPOINT, PARAMTER_VOLUME, SERVER_INFO
 from python.service.jdd_docker_service import get_container_info_by_container_name, pull_docker_image, create_container, \
     start_container, delete_container
 
-exception = ''
+
+ip = SERVER_INFO
+port = '2376'
+print 'start to deploy docker image to the server'
+
 
 
 # get container info
@@ -36,25 +40,5 @@ def dowork(server):
         start_container(ip, port, DOCKER_CONTAINER_NAME)
 
 
-server_num = int(os.getenv('SERVER_NUM'))
-servers = []
-if server_num > 0:
-    for n in range(1, server_num + 1, 1):
-        i = str(n)
-        server_info = str(os.getenv('SERVER_' + i)).split(":")
-        ip = str(server_info[1])
-        port = str(server_info[2])
-        user = str(server_info[0])
-        passwd = os.getenv('SERVER_PASSWD_' + i)
-        env_info_dict = {'ip': ip, 'port': port, 'user': user, 'passwd': passwd}
-        servers.append(env_info_dict)
 
-print servers
-pool = threadpool.ThreadPool(multiprocessing.cpu_count())
-requests = threadpool.makeRequests(dowork, servers)
-for req in requests:
-    pool.putRequest(req)
-pool.wait()
 
-if exception is not None and len(exception) > 0:
-    raise exception
