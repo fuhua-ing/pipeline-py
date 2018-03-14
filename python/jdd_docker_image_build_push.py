@@ -7,7 +7,7 @@ from constants.jdd_commands import C_docker_build, C_docker_push, C_docker_rm_lo
 from constants.jdd_common_constants import DOCKER_BUILD_WORK_PATH
 from constants.jdd_constants_from_env import PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, \
     CLASSIFIER, PROJECT_PACKAGE_TYPE
-from python.constants.jdd_service import get_tar, get_tar_md5, get_dockerfile
+from constants.jdd_service import get_tar, get_tar_md5, get_dockerfile
 
 os.system('rm -rf ' + DOCKER_BUILD_WORK_PATH)
 os.system('mkdir -p ' + DOCKER_BUILD_WORK_PATH)
