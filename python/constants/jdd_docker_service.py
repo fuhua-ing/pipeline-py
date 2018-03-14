@@ -108,7 +108,8 @@ def get_container_info_by_container_name(host, port, name):
             else:
                 print 'The specifect container is not exist'
                 return "!exsit"
-    except Exception:
+    except Exception,e:
+        print e
         print 'python is in exception!'
         return 'connect_error'
     finally:
