@@ -2,7 +2,7 @@ import os
 import urllib2
 from time import sleep
 
-from python.constants.jdd_common_constants import maven_path, maven_url, Http_Success_code
+from ..constants.jdd_common_constants import maven_path, maven_url, Http_Success_code
 
 
 def get_tar(r, g, a, v, c, p, curr_path):
