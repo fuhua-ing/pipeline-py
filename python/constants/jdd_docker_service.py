@@ -2,7 +2,7 @@
 import httplib, socket, ssl, traceback, json
 from _ssl import PROTOCOL_TLSv1_2
 
-from python.constants.jdd_common_constants import Http_Success_code
+from jdd_common_constants import Http_Success_code
 
 ca_cert_file = '/data/gocd/python/pipeline-py/python/cert/ca.pem'
 key_file = '/data/gocd/python/pipeline-py/python/cert/key.pem'

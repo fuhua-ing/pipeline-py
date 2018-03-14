@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from python.constants.jdd_common_constants import DOCKER_IMAGE_TAG, CURRENT_DOCKER_WITH_TAG
-from python.constants.jdd_constants_from_env import DOCKER_CONTAINER_NAME, DOCKER_IMAGE_NAME, PARAMTER_PORT, \
+from constants.jdd_common_constants import DOCKER_IMAGE_TAG, CURRENT_DOCKER_WITH_TAG
+from constants.jdd_constants_from_env import DOCKER_CONTAINER_NAME, DOCKER_IMAGE_NAME, PARAMTER_PORT, \
     PARAMTER_ENTRYPOINT, PARAMTER_VOLUME, SERVER_INFO
-from python.service.jdd_docker_service import get_container_info_by_container_name, pull_docker_image, create_container, \
+from constants.jdd_docker_service import get_container_info_by_container_name, pull_docker_image, create_container, \
     start_container, delete_container
 
 ip = SERVER_INFO
