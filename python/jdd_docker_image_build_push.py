@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 # 创建tar包工作目录
-import os
+import os,sys
 from time import sleep
-
+sys.path.append('/data/gocd/python/pipeline/python')
 from python.constants.jdd_commands import C_docker_build, C_docker_push, C_docker_rm_local
 from python.constants.jdd_common_constants import DOCKER_BUILD_WORK_PATH
 from python.constants.jdd_constants_from_env import PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, \
