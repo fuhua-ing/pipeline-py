@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-import urllib2, time
+import os
+import urllib2
+from time import sleep
 
-maven_url = 'maven-repository.jdddata.com'
-maven_path = '/nexus/service/local/artifact/maven/redirect?' + 'r=$R' + '&g=$G' + '&a=$A' + '&v=$V' + '&c=$C' + '&p=$P'
-Success_Http_Code = [200, 201, 202, 203, 204, 205, 206, 207, 208, 209]
+from python.constants.jdd_common_constants import maven_path, maven_url, Success_Http_Code
 
 
 def get_tar(r, g, a, v, c, p, curr_path):
@@ -15,14 +14,14 @@ def get_tar(r, g, a, v, c, p, curr_path):
     print resp.code
     true_url = resp.geturl()
     print true_url
-    time.sleep(2)
+    sleep(2)
     f = urllib2.urlopen(true_url, timeout=300000)
     http_code = f.code
     print http_code
     data = f.read()
     with open(curr_path + '/' + 'app-install.tar.gz', "wb") as code:
         code.write(data)
-    time.sleep(5)
+    sleep(5)
     md5 = urllib2.urlopen(true_url + '.md5', timeout=30000)
     if md5.code not in Success_Http_Code:
         return "-1"
@@ -40,5 +39,14 @@ def get_dockerfile(curr_path):
         code.write(data)
     print 'end of get Dockerfile'
 
-# path = '.'
-# get_tar('public', 'com.jdddata.crawler', 'crawler-project-transfermarkt', '2.0.1-SNAPSHOT', 'install', 'tar.gz', path)
+def get_tar_md5(curr_path):
+    obj_file = curr_path + '/' + 'app-install.tar.gz'
+    p = os.popen('md5sum ' + obj_file + " | awk '{print $1}'")
+    str_line = list()
+    for line in p.readlines():
+        line = line.strip()
+        if not len(line):
+            continue
+        str_line.append(line)
+    pp = str_line[0]
+    return pp

@@ -1,54 +1,36 @@
 # -*- coding: utf-8 -*-
-import os,time
-from network.jdd_get_file import get_tar
-from network.jdd_get_file import get_dockerfile
-from jdd_common import workPath, spliter, GO_PIPELINE_NAME, GO_JOB_NAME, GO_PIPELINE_COUNTER, GIT_BRANCH, \
-    PROJECT_PACKAGE_TYPE, PROJECT_VERSION, PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, CLASSIFILER, DOCKER_IMAGE_NAME, \
-    DOCKER_TAG_VERSION
 
+# 创建tar包工作目录
+import os
+from time import sleep
 
-def get_tar_md5():
-    obj_file = curr_path + '/' + 'app-install.tar.gz'
-    p = os.popen('md5sum ' + obj_file + " | awk '{print $1}'")
-    str_line = list()
-    for line in p.readlines():
-        line = line.strip()
-        if not len(line):
-            continue
-        str_line.append(line)
-    pp = str_line[0]
-    return pp
+from python.constants.jdd_commands import C_docker_build, C_docker_push, C_docker_rm_local
+from python.constants.jdd_common_constants import DOCKER_BUILD_WORK_PATH
+from python.constants.jdd_constants_from_env import PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, \
+    CLASSIFIER, PROJECT_PACKAGE_TYPE
+from python.service.jdd_service import get_tar, get_tar_md5, get_dockerfile
 
-
-# 第一步创建临时工作目录
-curr_path = workPath + spliter + GO_PIPELINE_NAME + spliter + GO_PIPELINE_COUNTER + spliter + GO_JOB_NAME
-
-os.system('rm -rf ' + curr_path)
-os.system('mkdir -p ' + curr_path)
+os.system('rm -rf ' + DOCKER_BUILD_WORK_PATH)
+os.system('mkdir -p ' + DOCKER_BUILD_WORK_PATH)
 
 # 拉取远程nexus tar.gz
-
-
-res = get_tar(PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, CLASSIFILER, PROJECT_PACKAGE_TYPE, curr_path)
-time.sleep(5)
+res = get_tar(PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, CLASSIFIER, PROJECT_PACKAGE_TYPE,
+              DOCKER_BUILD_WORK_PATH)
+sleep(5)
 if res == '-1':
     raise Exception("download tar.gz failed,please check last step run successfully")
-md5 = get_tar_md5()
+
+# 获取md5
+md5 = get_tar_md5(DOCKER_BUILD_WORK_PATH)
 if md5 != res:
     raise Exception("download tar.gz is not complete please try to run gocd again")
 
 # 拉取docker file
-get_dockerfile(curr_path)
-time.sleep(3)
+get_dockerfile(DOCKER_BUILD_WORK_PATH)
+sleep(3)
+
 # docker build
-
 # timestampLine = str(datetime.now().strftime('%Y%m%d%H%M%S'))
-
-
-current_docker = DOCKER_IMAGE_NAME + ':' + DOCKER_TAG_VERSION + '-' + GIT_BRANCH + '-' + GO_PIPELINE_COUNTER
-
-C_docker_build = 'docker build -t ' + current_docker + ' .'
-C_docker_push = 'docker push ' + current_docker
-time.sleep(2)
-C_docker_rm_local = 'docker rmi ' + current_docker
-os.system('cd ' + curr_path + ' && ' + C_docker_build + ' && ' + C_docker_push + ' && ' + C_docker_rm_local)
+sleep(2)
+os.system(
+    'cd ' + DOCKER_BUILD_WORK_PATH + ' && ' + C_docker_build + ' && ' + C_docker_push + ' && ' + C_docker_rm_local)

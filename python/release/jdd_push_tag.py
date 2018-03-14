@@ -1,7 +1,7 @@
 import os
 from time import sleep
 
-from python.jdd_common import GIT_BRANCH
+from python.constants.jdd_constants_from_env import GIT_BRANCH
 from python.release.service.jdd_release_service import code_path
 
 os.system(

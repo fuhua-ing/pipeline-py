@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 import threadpool, multiprocessing, os
-from jdd_docker_http import get_container_info_by_container_name
-from jdd_docker_http import delete_container
-from jdd_docker_http import pull_docker_image
-from jdd_docker_http import create_container
-from jdd_docker_http import start_container
-from jdd_common import DOCKER_IMAGE_NAME, DOCKER_CONTAINER_NAME, PARAMTER_PORT, \
-    PARAMTER_VOLUME, DOCKER_TAG_VERSION, GIT_BRANCH, GO_PIPELINE_COUNTER, PARAMTER_ENTRYPOINT
-
-image_tag = DOCKER_TAG_VERSION + '-' + GIT_BRANCH + '-' + GO_PIPELINE_COUNTER
-current_docker = DOCKER_IMAGE_NAME + ':' + image_tag
+from python.constants.jdd_common_constants import DOCKER_IMAGE_TAG, CURRENT_DOCKER_WITH_TAG
+from python.constants.jdd_constants_from_env import DOCKER_CONTAINER_NAME, DOCKER_IMAGE_NAME, PARAMTER_PORT, \
+    PARAMTER_ENTRYPOINT, PARAMTER_VOLUME
+from python.service.jdd_docker_service import get_container_info_by_container_name, pull_docker_image, create_container, \
+    start_container, delete_container
 
 exception = ''
 
@@ -25,17 +20,18 @@ def dowork(server):
     if container == 'connect_error':
         global exception
         exception = 'please check the target env,Network connect error,ip: ' + ip
+        return
     elif (container is None or container == '!exsit'):
         print 'container is not !exist'
-        pull_docker_image(ip, port, DOCKER_IMAGE_NAME, image_tag)
-        create_container(ip, port, DOCKER_CONTAINER_NAME, current_docker, paramter_port=PARAMTER_PORT,
+        pull_docker_image(ip, port, DOCKER_IMAGE_NAME, DOCKER_IMAGE_TAG)
+        create_container(ip, port, DOCKER_CONTAINER_NAME, CURRENT_DOCKER_WITH_TAG, paramter_port=PARAMTER_PORT,
                          paramter_volume=PARAMTER_VOLUME, paramter_Entrypoint=PARAMTER_ENTRYPOINT)
         start_container(ip, port, DOCKER_CONTAINER_NAME)
     else:
         print 'start to delete the container'
         delete_container(ip, port, DOCKER_CONTAINER_NAME)
-        pull_docker_image(ip, port, DOCKER_IMAGE_NAME, image_tag)
-        create_container(ip, port, DOCKER_CONTAINER_NAME, current_docker, paramter_port=PARAMTER_PORT,
+        pull_docker_image(ip, port, DOCKER_IMAGE_NAME, DOCKER_IMAGE_TAG)
+        create_container(ip, port, DOCKER_CONTAINER_NAME, CURRENT_DOCKER_WITH_TAG, paramter_port=PARAMTER_PORT,
                          paramter_volume=PARAMTER_VOLUME, paramter_Entrypoint=PARAMTER_ENTRYPOINT)
         start_container(ip, port, DOCKER_CONTAINER_NAME)
 

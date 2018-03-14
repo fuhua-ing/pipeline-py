@@ -1,4 +1,4 @@
-from python.jdd_common import GIT_URL, spliter, workPath, GO_PIPELINE_NAME, GO_PIPELINE_COUNTER, GO_JOB_NAME
+from python.constants.jdd_constants_from_env import GIT_URL, spliter, workPath, GO_PIPELINE_NAME, GO_PIPELINE_COUNTER, GO_JOB_NAME
 from python.release.service.jdd_release_service import get_last_dir
 
 code_last_dir = get_last_dir(GIT_URL)
