@@ -1,4 +1,4 @@
-from python.constants.jdd_constants_from_env import GO_PIPELINE_NAME, GO_PIPELINE_COUNTER, GO_JOB_NAME, \
+from jdd_constants_from_env import GO_PIPELINE_NAME, GO_PIPELINE_COUNTER, GO_JOB_NAME, \
     DOCKER_IMAGE_NAME, DOCKER_TAG_CLASSIFIER, GIT_BRANCH
 
 maven_url = 'maven-repository.jdddata.com'
