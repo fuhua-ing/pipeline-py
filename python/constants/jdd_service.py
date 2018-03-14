@@ -1,9 +1,19 @@
+# -*- coding: utf-8 -*-
 import os
 import urllib2
 from time import sleep
 
 from jdd_common_constants import maven_path, maven_url, Http_Success_code
 
+
+
+def getCounterCode(url, pipelineId):
+    resp = urllib2.urlopen(url + '?pipelineId=' + pipelineId)
+    print resp.code
+    data = resp.read()
+    print 'The counter num is :'
+    print data
+    return data
 
 def get_tar(r, g, a, v, c, p, curr_path):
     url = maven_path.replace("$R", r).replace("$G", g).replace("$A", a).replace("$V", v).replace("$C", c).replace("$P",

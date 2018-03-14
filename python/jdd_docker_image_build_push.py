@@ -3,11 +3,21 @@
 # 创建tar包工作目录
 import os
 from time import sleep
-from constants.jdd_commands import C_docker_build, C_docker_push, C_docker_rm_local
-from constants.jdd_common_constants import DOCKER_BUILD_WORK_PATH
+from constants.jdd_common_constants import DOCKER_BUILD_PATH, spliter
 from constants.jdd_constants_from_env import PROJECT_RESPOSITORY, GROUP_ID, ARTIFACT_ID, PROJECT_VERSION, \
-    CLASSIFIER, PROJECT_PACKAGE_TYPE
-from constants.jdd_service import get_tar, get_tar_md5, get_dockerfile
+    CLASSIFIER, PROJECT_PACKAGE_TYPE, GO_PIPELINE_NAME, GO_JOB_NAME, DOCKER_TAG_CLASSIFIER, \
+    GIT_BRANCH, DOCKER_IMAGE_NAME, PIPELINE_ID
+from constants.jdd_service import get_tar, get_tar_md5, get_dockerfile, getCounterCode
+
+url = 'http://192.168.136.158:8080/make/getCounterCode'
+GO_PIPELINE_COUNTER = getCounterCode(url, PIPELINE_ID)
+
+# docker image build path
+DOCKER_BUILD_WORK_PATH = DOCKER_BUILD_PATH + spliter + GO_PIPELINE_NAME + spliter + GO_PIPELINE_COUNTER + spliter + GO_JOB_NAME
+
+DOCKER_IMAGE_TAG = DOCKER_TAG_CLASSIFIER + '-' + GIT_BRANCH + '-' + GO_PIPELINE_COUNTER
+
+CURRENT_DOCKER_WITH_TAG = DOCKER_IMAGE_NAME + ':' + DOCKER_IMAGE_TAG
 
 os.system('rm -rf ' + DOCKER_BUILD_WORK_PATH)
 os.system('mkdir -p ' + DOCKER_BUILD_WORK_PATH)
@@ -29,6 +39,9 @@ get_dockerfile(DOCKER_BUILD_WORK_PATH)
 sleep(3)
 
 # docker build
+C_docker_build = 'docker build -t ' + CURRENT_DOCKER_WITH_TAG + ' .'
+C_docker_push = 'docker push ' + CURRENT_DOCKER_WITH_TAG
+C_docker_rm_local = 'docker rmi ' + CURRENT_DOCKER_WITH_TAG
 # timestampLine = str(datetime.now().strftime('%Y%m%d%H%M%S'))
 sleep(2)
 os.system(

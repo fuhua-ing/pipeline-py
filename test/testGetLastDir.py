@@ -1,4 +1,15 @@
-from python.release.service.jdd_release_service import get_last_dir
+import urllib2
 
-url = 'https://gitlab.jdddata.com/project/dac/dac.git'
-print get_last_dir(url=url)
+
+def getCounterCode(url, pipelineId):
+    resp = urllib2.urlopen(url + '?pipelineId=' + pipelineId)
+    print resp.code
+    data = resp.read()
+    print 'The counter num is :'
+    print data
+    return data
+
+
+cont = getCounterCode(url='http://192.168.136.158:8080/deploy/getCounterCode', pipelineId='dac')
+print type(cont)
+print cont.strip()

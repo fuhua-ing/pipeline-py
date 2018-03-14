@@ -4,8 +4,8 @@ import os
 
 # gocd 产生
 GO_PIPELINE_NAME = os.getenv('GO_PIPELINE_NAME')
-GO_PIPELINE_COUNTER = os.getenv('GO_PIPELINE_COUNTER')
 GO_JOB_NAME = os.getenv('GO_JOB_NAME')
+PIPELINE_ID=os.getenv('pipelineId')
 
 GIT_URL = os.getenv('GIT_SOURCE_URL')
 
