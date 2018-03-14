@@ -74,3 +74,5 @@ gocd_git_path = workPath + spliter + GO_PIPELINE_NAME + spliter + GO_PIPELINE_CO
 code_path = gocd_git_path + spliter + code_last_dir
 
 code_release = gocd_git_path + spliter + 'release'
+
+code_release_path = code_release + spliter + code_last_dir

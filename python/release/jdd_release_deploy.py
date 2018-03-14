@@ -1,0 +1,10 @@
+import os
+
+from python.jdd_common import GIT_BRANCH, GIT_URL
+
+from python.release.jdd_release_common import code_release, code_release_path
+
+status_deploy = os.system(
+    'cd ' + code_release + ' && ' + 'git clone -b ' + GIT_BRANCH + '-release ' + GIT_URL + ' && cd ' + code_release_path + ' && ' + '/usr/local/apache-maven-3.5.0/bin/mvn clean deploy -U')
+if status_deploy != 0:
+    raise Exception('deploy tar.gz from tag branch code error please check')
