@@ -2,7 +2,7 @@ import os
 import urllib2
 from time import sleep
 
-from python.constants.jdd_common_constants import maven_path, maven_url, Success_Http_Code
+from python.constants.jdd_common_constants import maven_path, maven_url, Http_Success_code
 
 
 def get_tar(r, g, a, v, c, p, curr_path):
@@ -23,7 +23,7 @@ def get_tar(r, g, a, v, c, p, curr_path):
         code.write(data)
     sleep(5)
     md5 = urllib2.urlopen(true_url + '.md5', timeout=30000)
-    if md5.code not in Success_Http_Code:
+    if md5.code not in Http_Success_code:
         return "-1"
     md5_code = md5.read()
     print md5_code
@@ -38,6 +38,7 @@ def get_dockerfile(curr_path):
     with open(curr_path + '/' + 'Dockerfile', "wb") as code:
         code.write(data)
     print 'end of get Dockerfile'
+
 
 def get_tar_md5(curr_path):
     obj_file = curr_path + '/' + 'app-install.tar.gz'
