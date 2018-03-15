@@ -42,7 +42,11 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
 
     print paramter_volume
     if paramter_volume is not None:
-        volumes = volumes + '"Binds":["' + paramter_volume + '"]'
+        volumeLine = ''
+        for v in paramter_volume.split(','):
+            volumeLine = volumeLine + '"' + v + '"' + ','
+        volume_content = del_last_char(volumeLine)
+        volumes = volumes + '"Binds":[' + volume_content + ']'
 
     if paramter_Entrypoint is not None:
         entrypointList = paramter_Entrypoint.split(",")
@@ -54,15 +58,15 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
 
     print volumes
 
-    if (ports is not None and ports.strip()!="") and (volumes is not None and volumes.strip()!=""):
+    if (ports is not None and ports.strip() != "") and (volumes is not None and volumes.strip() != ""):
         print 'hostconfig 1'
         HostConfig = '"HostConfig":{' + ports + ',' + volumes + '}'
 
-    if (ports is not None and ports.strip()!="") and (volumes is None or volumes.strip()==""):
+    if (ports is not None and ports.strip() != "") and (volumes is None or volumes.strip() == ""):
         print 'hostconfig 2'
         HostConfig = '"HostConfig":{' + ports + '}'
 
-    if (ports is None or ports.strip()=="") and (volumes is not None and volumes.strip()!=""):
+    if (ports is None or ports.strip() == "") and (volumes is not None and volumes.strip() != ""):
         print 'hostconfig 3'
         HostConfig = '"HostConfig":{' + volumes + '}'
 
@@ -108,7 +112,7 @@ def get_container_info_by_container_name(host, port, name):
             else:
                 print 'The specifect container is not exist'
                 return "!exsit"
-    except Exception,e:
+    except Exception, e:
         print e
         print 'python is in exception!'
         return 'connect_error'
@@ -232,7 +236,6 @@ def pull_docker_image(host, port, name, tag):
         if httpsConn:
             httpsConn.close()
 
-
 # body = '{"Image":"$IMAGE","PortBindings": { "$CONTAINER_PORT/tcp": [{ "HostPort": "$HOST_PORT" }]}}'
 # s = body.replace("$IMAGE",'nginx').replace("$CONTAINER_PORT","80").replace("$HOST_PORT","")
 # print s
@@ -244,4 +247,3 @@ def pull_docker_image(host, port, name, tag):
 # container = get_container_info_by_container_name('111.231.86.41', '2376', 'dadac')
 #
 # print container
-
