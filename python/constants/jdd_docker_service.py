@@ -24,7 +24,7 @@ def del_last_char(str):
     return "".join(str_list)
 
 
-def docker_generateBody(current_docker, paramter_port, paramter_volume,
+def docker_generateBody(current_docker, paramter_ports, paramter_volume,
                         paramter_Entrypoint):
     '''{"Env": ["FOO=bar","BAZ=quux"],"Cmd": ["date"],"Entrypoint": "","Image": "ubuntu","HostConfig": {"Binds": ["/tmp:/tmp"],"PortBindings": {"22/tcp": [{"HostPort": "11022"}]}}}'''
     image = '"Image":' + '"' + current_docker + '"'
@@ -32,12 +32,15 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
     volumes = ''
     entrypoint = ''
     HostConfig = ''
-    if paramter_port is not None:
-        portline = ''
-        for port in paramter_port.split(','):
-            print 'the split port is: ' + port
-            portline = portline + '"' + port.split(':')[1] + '/tcp"' + ':' + '[{"HostPort":"' + port.split[0] + '"}],'
-        port_content = del_last_char(portline)
+
+    if paramter_ports is not None:
+        port_line = ''
+        for port in paramter_ports.split(','):
+            print port
+            port_line = port_line + '"' + port.split(':')[1] + '/tcp"' + ':' + '[{"HostPort":' + '"' + port.split(
+                ':')[0] + '"' + '}],'
+        print port_line
+        port_content = del_last_char(port_line)
         ports = '"PortBindings":{' + port_content + '}'
         print 'the binding ports is: ' + ports
 
