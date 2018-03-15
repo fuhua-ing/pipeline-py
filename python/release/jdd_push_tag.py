@@ -2,10 +2,10 @@ import os
 from time import sleep
 
 from python.constants.jdd_constants_from_env import GIT_BRANCH
-from python.release.service.jdd_release_service import code_path
+from python.release.constants.jdd_release_service import code_path
 
 os.system(
-    'cd ' + code_path + ' && git commit -am "release" && ' + 'git tag -a ' + GIT_BRANCH + '-release ' + ' -m "release"')
+    'cd ' + code_path + ' && git add . && git commit -m "release" && ' + 'git tag -a ' + GIT_BRANCH + '-release ' + ' -m "release"')
 
 status_git_push = os.system('cd ' + code_path + ' && ' + ' git push origin ' + GIT_BRANCH + '-release')
 sleep(2)

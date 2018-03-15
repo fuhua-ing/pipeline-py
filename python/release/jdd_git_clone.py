@@ -1,8 +1,8 @@
 import os
 from time import sleep
 
-from python.constants.jdd_constants_from_env import GIT_URL, GIT_BRANCH
-from python.release.constants.jdd_release_constants import gocd_git_path
+from constants.jdd_constants_from_env import GIT_URL, GIT_BRANCH
+from constants.jdd_release_constants import gocd_git_path
 
 os.system('rm -rf ' + gocd_git_path)
 os.system('mkdir -p ' + gocd_git_path)

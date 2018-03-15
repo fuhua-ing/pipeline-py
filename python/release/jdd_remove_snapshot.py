@@ -1,7 +1,7 @@
 import os
 
 from python.release.constants.jdd_release_constants import code_path
-from python.release.service.jdd_release_service import pared_pom_xml
+from python.release.constants.jdd_release_service import pared_pom_xml
 
 print 'start to find pom.xml'
 p = os.popen('cd ' + code_path + ' && find ' + code_path + ' -name "pom.xml"')
