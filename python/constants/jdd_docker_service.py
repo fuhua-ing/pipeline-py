@@ -33,14 +33,14 @@ def docker_generateBody(current_docker, paramter_port, paramter_volume,
     entrypoint = ''
     HostConfig = ''
     if paramter_port is not None:
-        portList = paramter_port.strip().split(',')
         portline = ''
-        for port in portList:
-            portline = portline + '"' + port.split(':')[1] + '/tcp": [{"HostPort":"' + port.split[0] + '"}],'
+        for port in paramter_port.split(','):
+            print 'the split port is: ' + port
+            portline = portline + '"' + port.split(':')[1] + '/tcp"' + ':' + '[{"HostPort":"' + port.split[0] + '"}],'
         port_content = del_last_char(portline)
         ports = '"PortBindings":{' + port_content + '}'
+        print 'the binding ports is: ' + ports
 
-    print paramter_volume
     if paramter_volume is not None:
         volumeLine = ''
         for v in paramter_volume.split(','):
