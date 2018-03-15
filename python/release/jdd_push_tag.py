@@ -1,8 +1,8 @@
 import os
 from time import sleep
 
-from python.constants.jdd_constants_from_env import GIT_BRANCH
-from python.release.constants.jdd_release_service import code_path
+from constants.jdd_constants_from_env import GIT_BRANCH
+from constants.jdd_release_constants import code_path
 
 os.system(
     'cd ' + code_path + ' && git add . && git commit -m "release" && ' + 'git tag -a ' + GIT_BRANCH + '-release ' + ' -m "release"')

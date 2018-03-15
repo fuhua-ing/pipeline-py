@@ -1,7 +1,7 @@
 import os
 
-from python.constants.jdd_constants_from_env import GIT_BRANCH, GIT_URL
-from python.release.constants.jdd_release_constants import code_release, code_release_path
+from constants.jdd_constants_from_env import GIT_BRANCH, GIT_URL
+from constants.jdd_release_constants import code_release, code_release_path
 
 os.system('rm -rf ' + code_release)
 os.system('mkdir -p ' + code_release)

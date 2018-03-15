@@ -2,7 +2,7 @@
 import os
 from time import sleep
 
-from python.release.constants.jdd_release_constants import code_path
+from constants.jdd_release_constants import code_path
 
 status = os.system('cd ' + code_path + ' && ' + '/usr/local/apache-maven-3.5.0/bin/mvn clean install -U')
 sleep(3)
