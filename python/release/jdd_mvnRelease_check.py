@@ -1,4 +1,4 @@
-# 本地构件通过则上传
+# -*- coding: utf-8 -*-
 import os
 from time import sleep
 

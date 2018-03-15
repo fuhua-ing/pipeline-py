@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from jdd_constants_from_env import GIT_URL, GO_PIPELINE_NAME, GO_JOB_NAME
 from jdd_release_service import get_last_dir
 

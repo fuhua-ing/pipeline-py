@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 
 from constants.jdd_constants_from_env import GIT_BRANCH, GIT_URL

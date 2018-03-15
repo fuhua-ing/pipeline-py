@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 
 from constants.jdd_release_constants import code_path
