@@ -1,11 +1,22 @@
 # -*- coding: utf-8 -*-
+import urllib2
+
 from constants.jdd_constants_from_env import DOCKER_CONTAINER_NAME, DOCKER_IMAGE_NAME, PARAMTER_PORT, \
     PARAMTER_ENTRYPOINT, PARAMTER_VOLUME, SERVER_INFO, PIPELINE_ID, GO_PIPELINE_NAME, GIT_BRANCH, DOCKER_TAG_CLASSIFIER, \
     GO_JOB_NAME
 from constants.jdd_docker_service import get_container_info_by_container_name, pull_docker_image, create_container, \
     start_container, delete_container
 from constants.jdd_common_constants import spliter, DOCKER_BUILD_PATH
-from constants.jdd_service import getCounterCode
+
+
+def getCounterCode(url, pipelineId):
+    resp = urllib2.urlopen(url + '?pipelineId=' + pipelineId)
+    print resp.code
+    data = resp.read()
+    print 'The counter num is :'
+    print data
+    return data
+
 
 url = 'http://192.168.136.158:8080/deploy/getCounterCode'
 GO_PIPELINE_COUNTER = getCounterCode(url, PIPELINE_ID)
