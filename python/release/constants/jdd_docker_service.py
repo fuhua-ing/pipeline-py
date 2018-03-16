@@ -192,7 +192,7 @@ def create_container(host, port, docker_container_name, current_docker, paramter
             httpsConn.close()
 
 
-def start_container(host, port, container_name, paramter_port):
+def start_container(host, port, container_name):
     try:
         httpsConn = httplib.HTTPSConnection(host, port)
         sock = socket.create_connection((httpsConn.host, httpsConn.port))
