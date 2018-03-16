@@ -17,26 +17,10 @@ image_pull = '/images/create?fromImage={0}&tag={1}'
 
 socket.setdefaulttimeout(1200000)
 
-
 def del_last_char(str):
     str_list = list(str)
     str_list.pop()
     return "".join(str_list)
-
-
-def getStart_body(paramter_ports):
-    if paramter_ports is not None:
-        port_line = ''
-        for port in paramter_ports.split(','):
-            print port
-            port_line = port_line + '"' + port.split(':')[1] + '/tcp"' + ':' + '[{"HostIP": "0.0.0.0", "HostPort":' + '"' + port.split(':')[0] + '"' + '}],'
-        print port_line
-        port_content = del_last_char(port_line)
-        ports = '"PortBindings":{' + port_content + '}'
-        print 'the start binding ports is: ' + ports
-        return ports
-    else:
-        return None
 
 
 def docker_generateBody(current_docker, paramter_ports, paramter_volume,
@@ -47,7 +31,7 @@ def docker_generateBody(current_docker, paramter_ports, paramter_volume,
     volumes = ''
     entrypoint = ''
     HostConfig = ''
-
+    export_port = ''
     if paramter_ports is not None:
         port_line = ''
         export_port_line = ''
@@ -58,7 +42,8 @@ def docker_generateBody(current_docker, paramter_ports, paramter_volume,
         print port_line
         port_content = del_last_char(port_line)
         export_port_content = del_last_char(export_port_line)
-        ports = '"ExposedPorts":{' + export_port_content + '},' + '"PortBindings":{' + port_content + '}'
+        ports = '"PortBindings":{' + port_content + '}'
+        export_port = '"ExposedPorts":{' + export_port_content + '}'
         print 'the binding ports is: ' + ports
 
     if paramter_volume is not None:
@@ -95,7 +80,8 @@ def docker_generateBody(current_docker, paramter_ports, paramter_volume,
         body = body + ',' + entrypoint
     if HostConfig is not None and len(HostConfig) > 0:
         body = body + ',' + HostConfig
-    print HostConfig
+    if export_port is not None and len(export_port)> 0:
+        body = body + ','+export_port
     body = body + '}'
     return body
 
@@ -213,10 +199,8 @@ def start_container(host, port, container_name, paramter_port):
         httpsConn.sock = ssl.wrap_socket(sock, key_file, cert_file, cert_reqs=ssl.CERT_REQUIRED,
                                          ssl_version=PROTOCOL_TLSv1_2,
                                          ca_certs=ca_cert_file)
-
-        start_body = getStart_body(paramter_port)
         httpsConn.request(method='POST', url='/containers/' + container_name + '/start',
-                          headers={"Content-Type": "application/json"}, body=start_body)
+                          headers={"Content-Type": "application/json"})
         res = httpsConn.getresponse()
         http_code = res.status
         http_resp = res.read()
