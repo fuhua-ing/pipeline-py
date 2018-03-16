@@ -37,7 +37,7 @@ def docker_generateBody(current_docker, paramter_ports, paramter_volume,
         port_line = ''
         for port in paramter_ports.split(','):
             print port
-            port_line = port_line + '"' + port.split(':')[1] + '/tcp"' + ':' + '[{"HostPort":' + '"' + port.split(':')[ 0] + '"' + '}],'
+            port_line = port_line + '"' + port.split(':')[1] + '/tcp"' + ':' + '[{"HostIP": "0.0.0.0", HostPort":' + '"' + port.split(':')[0] + '"' + '}],'
         print port_line
         port_content = del_last_char(port_line)
         ports = '"PortBindings":{' + port_content + '}'
