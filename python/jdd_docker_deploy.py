@@ -33,11 +33,11 @@ elif (container is None or container == '!exsit'):
 
     create_container(ip, port, DOCKER_CONTAINER_NAME, CURRENT_DOCKER_WITH_TAG, paramter_port=PARAMTER_PORT,
                      paramter_volume=PARAMTER_VOLUME, paramter_Entrypoint=PARAMTER_ENTRYPOINT)
-    start_container(ip, port, DOCKER_CONTAINER_NAME)
+    start_container(ip, port, DOCKER_CONTAINER_NAME, PARAMTER_PORT)
 else:
     print 'start to delete the container'
     delete_container(ip, port, DOCKER_CONTAINER_NAME)
     pull_docker_image(ip, port, DOCKER_IMAGE_NAME, DOCKER_IMAGE_TAG)
     create_container(ip, port, DOCKER_CONTAINER_NAME, CURRENT_DOCKER_WITH_TAG, paramter_port=PARAMTER_PORT,
                      paramter_volume=PARAMTER_VOLUME, paramter_Entrypoint=PARAMTER_ENTRYPOINT)
-    start_container(ip, port, DOCKER_CONTAINER_NAME)
+    start_container(ip, port, DOCKER_CONTAINER_NAME, PARAMTER_PORT)

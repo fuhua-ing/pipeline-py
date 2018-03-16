@@ -24,6 +24,21 @@ def del_last_char(str):
     return "".join(str_list)
 
 
+def getStart_body(paramter_ports):
+    if paramter_ports is not None:
+        port_line = ''
+        for port in paramter_ports.split(','):
+            print port
+            port_line = port_line + '"' + port.split(':')[1] + '/tcp"' + ':' + '[{"HostIP": "0.0.0.0", "HostPort":' + '"' + port.split(':')[0] + '"' + '}],'
+        print port_line
+        port_content = del_last_char(port_line)
+        ports = '"PortBindings":{' + port_content + '}'
+        print 'the start binding ports is: ' + ports
+        return ports
+    else:
+        return None
+
+
 def docker_generateBody(current_docker, paramter_ports, paramter_volume,
                         paramter_Entrypoint):
     '''{"Env": ["FOO=bar","BAZ=quux"],"Cmd": ["date"],"Entrypoint": "","Image": "ubuntu","HostConfig": {"Binds": ["/tmp:/tmp"],"PortBindings": {"22/tcp": [{"HostPort": "11022"}]}}}'''
@@ -191,15 +206,17 @@ def create_container(host, port, docker_container_name, current_docker, paramter
             httpsConn.close()
 
 
-def start_container(host, port, container_name):
+def start_container(host, port, container_name, paramter_port):
     try:
         httpsConn = httplib.HTTPSConnection(host, port)
         sock = socket.create_connection((httpsConn.host, httpsConn.port))
         httpsConn.sock = ssl.wrap_socket(sock, key_file, cert_file, cert_reqs=ssl.CERT_REQUIRED,
                                          ssl_version=PROTOCOL_TLSv1_2,
                                          ca_certs=ca_cert_file)
+
+        start_body = getStart_body(paramter_port)
         httpsConn.request(method='POST', url='/containers/' + container_name + '/start',
-                          headers={"Content-Type": "application/json"})
+                          headers={"Content-Type": "application/json"}, body=start_body)
         res = httpsConn.getresponse()
         http_code = res.status
         http_resp = res.read()
