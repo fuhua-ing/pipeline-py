@@ -35,12 +35,15 @@ def docker_generateBody(current_docker, paramter_ports, paramter_volume,
 
     if paramter_ports is not None:
         port_line = ''
+        export_port_line = ''
         for port in paramter_ports.split(','):
             print port
             port_line = port_line + '"' + port.split(':')[1] + '/tcp"' + ':' + '[{"HostIP": "0.0.0.0", "HostPort":' + '"' + port.split(':')[0] + '"' + '}],'
+            export_port_line = export_port_line + +'"' + port.split[1] + '/tcp"'+':{},'
         print port_line
         port_content = del_last_char(port_line)
-        ports = '"PortBindings":{' + port_content + '}'
+        export_port_content = del_last_char(export_port_line)
+        ports = '"ExposedPorts":{'+export_port_content+'},'+'"PortBindings":{' + port_content + '}'
         print 'the binding ports is: ' + ports
 
     if paramter_volume is not None:
